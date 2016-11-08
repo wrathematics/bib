@@ -17,14 +17,6 @@ void freevec(dvector_t *v);
 void freemat(dmatrix_t *m);
 
 // level2.c
-#include <stdlib.h>
-
-#include "bib.h"
-#include "blas.h"
-#include "cdefs.h"
-
-
-// upper triangle of t(x) %*% x
 int crossprod(const double alpha, cmat_r x, mat_r cp);
 int crossprod_a(const double alpha, cmat_r x, mat_r cp);
 
