@@ -16,6 +16,8 @@ void bib_errcheck(const int err)
     fprintf(stderr, "input matrices/vectors are not conformable");
   else if (err == LIBBIB_RETDIMMISMATCH)
     fprintf(stderr, "return dimensions impossible for given input(s)");
+  else if (err == LIBBIB_RESTRICTFAIL)
+    fprintf(stderr, "inputs must be distinct");
   else
     fprintf(stderr, "unknown error code %d; please report this", err);
   
