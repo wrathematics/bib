@@ -78,3 +78,20 @@ int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m)
   m->data = data;
   return LIBBIB_OK;
 }
+
+
+
+void freevec(dvector_t *v)
+{
+  free(v->data);
+  v->data = NULL;
+  v->len = 0;
+}
+
+void freemat(dmatrix_t *m)
+{
+  free(m->data);
+  m->data = NULL;
+  m->nrows = 0;
+  m->ncols = 0;
+}
