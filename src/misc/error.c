@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cdefs.h"
+#include "../cdefs.h"
 
 void bib_errcheck(const int err)
 {
