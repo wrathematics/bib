@@ -8,6 +8,7 @@
 // upper triangle of t(x) %*% x
 int crossprod(const double alpha, cmat_r x, mat_r cp)
 {
+  CHECKIFSAME(x, cp);
   int info = 0;
   if (cp->nrows != x->ncols || cp->ncols != x->ncols)
     return LIBBIB_RETDIMMISMATCH;
@@ -20,6 +21,7 @@ int crossprod(const double alpha, cmat_r x, mat_r cp)
 
 int crossprod_a(const double alpha, cmat_r x, mat_r cp)
 {
+  CHECKIFSAME(x, cp);
   int check = setmat(x->ncols, x->ncols, NULL, cp);
   CHECKRET(check);
   
@@ -30,6 +32,7 @@ int crossprod_a(const double alpha, cmat_r x, mat_r cp)
 
 int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
 {
+  CHECKIFSAME(x, tcp);
   int info = 0;
   if (tcp->nrows != x->nrows || tcp->ncols != x->nrows)
     return LIBBIB_RETDIMMISMATCH;
@@ -42,6 +45,7 @@ int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
 
 int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp)
 {
+  CHECKIFSAME(x, tcp);
   int check = setmat(x->nrows, x->nrows, NULL, tcp);
   CHECKRET(check);
   
@@ -53,6 +57,7 @@ int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp)
 // ret = alpha*x*y
 int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
 {
+  CHECKIFSAME(y, ret);
   char t;
   if (trans)
   {
@@ -79,6 +84,7 @@ int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
 
 int mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
 {
+  CHECKIFSAME(y, ret);
   len_t len;
   if (trans)
     len = x->ncols;

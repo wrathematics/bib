@@ -1,9 +1,12 @@
 #include "blas.h"
 #include "types.h"
+#include "cdefs.h"
 
-
-void mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
+int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
 {
+  CHECKIFSAME(x, ret);
+  CHECKIFSAME(y, ret);
+  
   // m = # rows of op(x)
   // n = # cols of op(y)
   // k = # cols of op(x)
@@ -41,5 +44,9 @@ void mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
       in = y->ncols;
   }
   
+  // TODO check for conformality
+  
   dgemm_(&ctransx, &ctransy, &im, &in, &ik, &(double){1.0}, x->data, &(x->nrows), y->data, &(y->nrows), &(double){0.0}, ret->data, &(ret->nrows));
+  
+  return LIBBIB_OK;
 }
