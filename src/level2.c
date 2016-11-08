@@ -70,7 +70,7 @@ int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
     else if (ret->len != x->nrows)
       return LIBBIB_RETDIMMISMATCH;
     
-    t = 'C';
+    t = 'N';
   }
   
   dgemv_(&t, &x->nrows, &x->ncols, &alpha, x->data, &x->nrows, y->data, &(int){1}, &(double){0.0}, ret->data, &(int){1});
