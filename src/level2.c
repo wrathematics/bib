@@ -4,6 +4,7 @@
 #include "cdefs.h"
 #include "types.h"
 
+
 // upper triangle of t(x) %*% x
 int crossprod(const double alpha, cmat_r x, mat_r cp)
 {
@@ -15,6 +16,17 @@ int crossprod(const double alpha, cmat_r x, mat_r cp)
     &x->nrows, &(double){0.0}, cp->data, &x->ncols);
   
   return info;
+}
+
+int crossprod_a(const double alpha, cmat_r x, mat_r cp)
+{
+  const int n = x->ncols;
+  cp->nrows = n;
+  cp->ncols = n;
+  cp->data = malloc(n*n * sizeof(*cp->data));
+  CHECKMALLOC(cp->data);
+  
+  return crossprod(alpha, x, cp);
 }
 
 
@@ -29,4 +41,15 @@ int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
     &x->nrows, &(double){0.0}, tcp->data, &x->nrows);
   
   return info;
+}
+
+int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp)
+{
+  const int m = x->nrows;
+  tcp->nrows = m;
+  tcp->ncols = m;
+  tcp->data = malloc(m*m * sizeof(*tcp->data));
+  CHECKMALLOC(tcp->data);
+  
+  return crossprod(alpha, x, tcp);
 }
