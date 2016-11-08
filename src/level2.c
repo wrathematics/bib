@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
+#include "bib.h"
 #include "blas.h"
 #include "cdefs.h"
-#include "types.h"
 
 
 // upper triangle of t(x) %*% x
@@ -20,11 +20,8 @@ int crossprod(const double alpha, cmat_r x, mat_r cp)
 
 int crossprod_a(const double alpha, cmat_r x, mat_r cp)
 {
-  const int n = x->ncols;
-  cp->nrows = n;
-  cp->ncols = n;
-  cp->data = malloc(n*n * sizeof(*cp->data));
-  CHECKMALLOC(cp->data);
+  int check = setmat(x->ncols, x->ncols, NULL, cp);
+  CHECKRET(check);
   
   return crossprod(alpha, x, cp);
 }
@@ -45,11 +42,51 @@ int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
 
 int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp)
 {
-  const int m = x->nrows;
-  tcp->nrows = m;
-  tcp->ncols = m;
-  tcp->data = malloc(m*m * sizeof(*tcp->data));
-  CHECKMALLOC(tcp->data);
+  int check = setmat(x->nrows, x->nrows, NULL, tcp);
+  CHECKRET(check);
   
   return crossprod(alpha, x, tcp);
+}
+
+
+
+// ret = alpha*x*y
+int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
+{
+  char t;
+  if (trans)
+  {
+    if (y->len != x->nrows)
+      return LIBBIB_INDIMMISMATCH;
+    else if (ret->len != x->ncols)
+      return LIBBIB_RETDIMMISMATCH;
+    
+    t = 'T';
+  }
+  else
+  {
+    if (y->len != x->ncols)
+      return LIBBIB_INDIMMISMATCH;
+    else if (ret->len != x->nrows)
+      return LIBBIB_RETDIMMISMATCH;
+    
+    t = 'C';
+  }
+  
+  dgemv_(&t, &x->nrows, &x->ncols, &alpha, x->data, &x->nrows, y->data, &(int){1}, &(double){0.0}, ret->data, &(int){1});
+  return LIBBIB_OK;
+}
+
+int mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
+{
+  len_t len;
+  if (trans)
+    len = x->ncols;
+  else
+    len = x->nrows;
+  
+  int check = setvec(len, NULL, ret);
+  CHECKRET(check);
+  
+  return mvprod(trans, alpha, x, y, ret);
 }
