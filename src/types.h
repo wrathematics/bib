@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 typedef int len_t;
+typedef const len_t clen_t;
 
 // dense matrix
 typedef struct dmatrix_t
