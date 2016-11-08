@@ -1,6 +1,7 @@
 #ifndef LIBBIB_CDEFS_H__
 #define LIBBIB_CDEFS_H__
 
+
 #define EPSILON 1e-10
 
 #define MAX(a,b) (a<b?b:a)
@@ -15,5 +16,6 @@
 #define CHECKMALLOC(x) if (x == NULL) return LIBBIB_BADMALLOC
 #define CHECKRET(ret)  if (ret != 0)  return ret
 #define CHECKIFSAME(x,y) if(x==0) return LIBBIB_RESTRICTFAIL
+
 
 #endif
