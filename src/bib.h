@@ -3,8 +3,21 @@
 
 
 #include <stdlib.h>
-
 #include "types.h"
+
+
+// ----------------------------------------------------------------------------
+// lapack/
+// ----------------------------------------------------------------------------
+
+// lu.c
+int invert(mat_r x, int *info);
+
+
+
+// ----------------------------------------------------------------------------
+// misc/
+// ----------------------------------------------------------------------------
 
 // allocators.c
 dvector_t *newvec(clen_t len, double *data);
@@ -15,6 +28,26 @@ int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m);
 
 void freevec(dvector_t *v);
 void freemat(dmatrix_t *m);
+
+// error.c
+void bib_errcheck(const int err);
+
+// is_sym.c
+bool is_sym(cmat_r x);
+
+// rev.c
+void reverse_vec(vec_r x);
+void reverse_mat(mat_r x);
+
+// xpose.c
+int xpose(cmat_r x, mat_r tx);
+int xpose_a(cmat_r x, mat_r tx);
+
+
+
+// ----------------------------------------------------------------------------
+// ./
+// ----------------------------------------------------------------------------
 
 // level1.c
 double dotprod(cvec_r x, cvec_r y);
