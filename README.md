@@ -6,6 +6,10 @@ The BLAS and LAPACK are wonderful libraries, but very difficult to use until you
 
 BIB does away with a lot of these powerful-but-complicated options.  For example, `INCX` arguments for vector operations are always 1, and `LDA` parameters for matrices are always the number of rows of the matrix.  This cost is necessary in order to produce simple, clean interfaces.  If you find this overly restrictive, my opinion is that you should learn to use the BLAS/LAPACK natively.
 
+We also restrict the interface only to dense vectors/matrices.  Single precision matrix algebra makes no sense to me.  (Double) complex may be supported at a later date.
+
+Additionally, BIB has a few optimized utility functions not included in BLAS/LAPACK, such as matrix transpose.
+
 
 
 ## Building and Installation
@@ -20,19 +24,19 @@ in the project root to build the static library.  Eventually this will be a prop
 
 ## Similar Projects
 
-* Armadillo is a really great matrix algebra library.  The problem is that it's C++.  If you don't want to bring the C++ linker to the party (especially if you invited Fortran), then this is out.
-* There's also Eigen, but again, C++.
-* Boost probably does something like this, but fuck Boost.  Also C++.
-* PETSc is incredible, but again, huge, and with C++ linkage (even though it's really a C library at its heart).
-* GSL is an amazing library that has some matrix stuff.  One problem is that GSL is HUGE, can be difficult to build from source, and not that commonly installed (e.g. on clusters and supercomputers).  Also it's GPL, which might be distasteful.
+* [Armadillo](http://arma.sourceforge.net/) is a really great matrix algebra library.  The problem is that it's C++.  If you don't want to bring the C++ linker to the party (especially if you invited Fortran), then this is out.
+* There's also [Eigen](http://eigen.tuxfamily.org/), but again, C++.
+* [Boost](http://www.boost.org/) probably does something like this, but fuck Boost.
+* [PETSc](https://www.mcs.anl.gov/petsc/) is incredible, but again, huge, and with C++ linkage (even though it's really a C library at its heart).
+* [GSL](https://www.gnu.org/software/gsl/) is an amazing library that has some matrix stuff.  One problem is that GSL is HUGE, can be difficult to build from source, and not that commonly installed (e.g. on clusters and supercomputers).  Also it's GPL, which might be distasteful.
 
-There are a million other C++ frameworks I didn't mention, but these are all the big ones, I think.  BIB differes in that it's
+There are a million other C++ frameworks I didn't mention, but these are all the big ones, I think.  BIB differs in that it's:
 
 * Small and easy to build (and hopefully easy to use).
-* Pure C.
+* Pure C, with no C++ linkage.
 * Permissively licensed.
 
-I'm actually not aware of another project like this.  But even if there is, hopefully you'll find that my approach has a few good ideas in it.
+I'm actually not aware of another project that meets these criteria.  But even if there is, hopefully you'll find that my approach has a few good ideas in it.
 
 
 
@@ -42,6 +46,6 @@ The project is licensed under a very permissive "1-clause" BSD.  The tldr is:
 
 1. I'm not liable for anything and make no warranties or guarantees about the software.
 2. You can't strip my copyright notices off of source code.
-3. You *do not* have to redistribute the copyright notice on binary distributions of software.
+3. You *do not* have to redistribute the copyright notice on binary distributions of software (but I'm obviously still a copyright holder of BIB, even in binary distributions).
 
 Note that I am not a lawyer and this interpretation could be wrong I guess, though it's my intention.  See the file `LICENSE.md` for the full license terms.  Items 1 and 2 above are non-negotiable, but if you want this dual-licensed under something else for some reason, email me.
