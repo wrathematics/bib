@@ -8,7 +8,9 @@
 // C ddot replica using dgemm
 double dotprod(cvec_r x, cvec_r y)
 {
-  // TODO len check
+  if (x->len != y->len)
+    return LIBBIB_INDIMMISMATCH;
+  
   double dp;
   
   dgemm_(&(char){'t'}, &(char){'n'}, &(int){1}, &(int){1}, &x->len,
@@ -49,6 +51,7 @@ double vnorm(cvec_r x)
 
 int vswap(cvec_r x, vec_r y)
 {
+  CHECKIFSAME(x, y);
   if (x->len != y->len)
     return LIBBIB_INDIMMISMATCH;
   
@@ -61,6 +64,7 @@ int vswap(cvec_r x, vec_r y)
 
 int vcopy(cvec_r x, vec_r y)
 {
+  CHECKIFSAME(x, y);
   if (x->len != y->len)
     return LIBBIB_INDIMMISMATCH;
   
