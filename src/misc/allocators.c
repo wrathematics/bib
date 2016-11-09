@@ -45,7 +45,11 @@ dvector_t *newvec(clen_t len, double *data)
 int setvec(clen_t len, double *data, dvector_t *v)
 {
   if (data == NULL)
-    _bib_allocator(len, &data);
+  {
+    int check = _bib_allocator(len, &data);
+    if (check != LIBBIB_OK)
+      return check;
+  }
   
   v->len = len;
   v->data = data;
@@ -71,7 +75,11 @@ dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
 int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m)
 {
   if (data == NULL)
-    _bib_allocator(nrows*ncols, &data);
+  {
+    int check = _bib_allocator(nrows*ncols, &data);
+    if (check != LIBBIB_OK)
+      return check;
+  }
   
   m->nrows = nrows;
   m->ncols = ncols;
