@@ -3,9 +3,10 @@ CFLAGS=-std=c99 -O3 -Wall -pedantic -fopenmp
 LDFLAGS=-llapack -lblas -lm
 
 
+SRC_LAPACK = $(wildcard src/lapack/*.c)
 SRC_MISC = $(wildcard src/misc/*.c)
 SRC_MAIN = $(wildcard src/*.c)
-SRC = $(SRC_MISC) $(SRC_MAIN)
+SRC = $(SRC_LAPACK) $(SRC_MISC) $(SRC_MAIN)
 OBJ = $(SRC:.c=.o)
 LIB = "libbib.a"
 
@@ -22,4 +23,3 @@ static: $(OBJ)
 
 clean:
 	rm -f $(LIB) $(OBJ)
-
