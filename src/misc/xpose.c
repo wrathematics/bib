@@ -3,12 +3,12 @@
 #include "../cdefs.h"
 #include "safeomp.h"
 
+#define BLOCKSIZE 8 // TODO check cache line explicitly
 
 int xpose(cmat_r x, mat_r tx)
 {
   CHECKIFSAME(x, tx);
   
-  const int blocksize = 8; // TODO check cache line explicitly
   const int m = x->nrows;
   const int n = x->ncols;
   const double *const x_data = x->data;
@@ -18,13 +18,13 @@ int xpose(cmat_r x, mat_r tx)
     return LIBBIB_INDIMMISMATCH;
   
   #pragma omp parallel for default(none) schedule(dynamic, 1) if(n>OMP_MIN_SIZE)
-  for (int j=0; j<n; j+=blocksize)
+  for (int j=0; j<n; j+=BLOCKSIZE)
   {
-    for (int i=0; i<m; i+=blocksize)
+    for (int i=0; i<m; i+=BLOCKSIZE)
     {
-      for (int col=j; col<j+blocksize && col<n; ++col)
+      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
       {
-        for (int row=i; row<i+blocksize && row<m; ++row)
+        for (int row=i; row<i+BLOCKSIZE && row<m; ++row)
           tx_data[col + n*row] = x_data[row + m*col];
       }
     }

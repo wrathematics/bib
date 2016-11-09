@@ -19,7 +19,6 @@ void reverse_vec(vec_r x)
 
 
 
-// reverse columns of a column-major matrix
 void reverse_mat(mat_r x)
 {
   const int m = x->nrows;
