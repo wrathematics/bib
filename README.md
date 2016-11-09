@@ -2,6 +2,9 @@
 
 ![logo](logo/logo.png)
 
+NOTE: this is so new I don't even have a version number yet.  Use at your own peril.
+
+
 BIB is the Basic Interface for the BLAS (and LAPACK), a basic C interface to computational linear algebra.
 
 The BLAS and LAPACK are wonderful libraries, but very difficult to use until you understand their strange syntax and formulation.  Mastering their strange way of thinking can lead to hilariously high-performance code.  But most use-cases don't require their full power.
