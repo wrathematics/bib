@@ -1,18 +1,19 @@
 #include <stdlib.h>
+#include <errno.h>
 
 #include "lapack.h"
 #include "../cdefs.h"
 #include "../types.h"
 
 
-int invert(mat_r x, int *info)
+int invert(mat_r x)
 {
   const int n = x->nrows;
   if (n != x->ncols)
     return LIBBIB_NONSQUARE;
   
   double *const x_data = x->data;
-  
+  int info = LIBBIB_OK;
   int *ipiv;
   int lwork;
   double tmp;
@@ -24,15 +25,23 @@ int invert(mat_r x, int *info)
   if (ipiv == NULL)
     return LIBBIB_BADMALLOC;
   
-  dgetrf_(&n, &n, x_data, &n, ipiv, info);
-  if (*info != 0)
+  dgetrf_(&n, &n, x_data, &n, ipiv, &info);
+  if (info != 0)
+  {
+    errno = info;
+    info = LIBBIB_LAPACKERR;
     goto cleanup;
+  }
   
   // Invert
   lwork = -1;
-  dgetri_(&n, x_data, &n, ipiv, &tmp, &lwork, info);
+  dgetri_(&n, x_data, &n, ipiv, &tmp, &lwork, &info);
   if (info != 0)
+  {
+    errno = info;
+    info = LIBBIB_LAPACKERR;
     goto cleanup;
+  }
   
   lwork = (int) tmp;
   work = malloc(lwork * sizeof(*work));
@@ -42,12 +51,12 @@ int invert(mat_r x, int *info)
     return LIBBIB_BADMALLOC;
   }
   
-  dgetri_(&n, x_data, &n, ipiv, work, &lwork, info);
+  dgetri_(&n, x_data, &n, ipiv, work, &lwork, &info);
   
   
   free(work);
 cleanup:
   free(ipiv);
   
-  return LIBBIB_OK;
+  return info;
 }
