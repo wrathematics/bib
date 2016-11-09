@@ -22,15 +22,15 @@ in the project root to build the static library.  Eventually this will be a prop
 
 
 
-## Similar Projects
+## BIB Philosophy and Similar Projects
 
 * [Armadillo](http://arma.sourceforge.net/) is a really great matrix algebra library.  The problem is that it's C++.  If you don't want to bring the C++ linker to the party (especially if you invited Fortran), then this is out.
 * There's also [Eigen](http://eigen.tuxfamily.org/), but again, C++.
 * [Boost](http://www.boost.org/) probably does something like this, but fuck Boost.
-* [PETSc](https://www.mcs.anl.gov/petsc/) is incredible, but again, huge, and with C++ linkage (even though it's really a C library at its heart).
-* [GSL](https://www.gnu.org/software/gsl/) is an amazing library that has some matrix stuff.  One problem is that GSL is HUGE, can be difficult to build from source, and not that commonly installed (e.g. on clusters and supercomputers).  Also it's GPL, which might be distasteful.
+* [PETSc](https://www.mcs.anl.gov/petsc/) is incredible, but it's huge, complicated (and primarily meant for distributed stuff imo), and with C++ linkage (even though it's really a C library at its heart).
+* [GSL](https://www.gnu.org/software/gsl/) is an amazing library that has similar matrix stuff (and much more).  One problem is that GSL is HUGE, can be difficult to build from source, and not that commonly installed (e.g. on clusters and supercomputers).  Also it's GPL, which might be distasteful.
 
-There are a million other C++ frameworks I didn't mention, but these are all the big ones, I think.  BIB differs in that it's:
+There are a million other C++ frameworks I didn't mention, but these are all the big ones, I think.  BIB differs from these projects in that it's:
 
 * Small and easy to build (and hopefully easy to use).
 * Pure C, with no C++ linkage.
