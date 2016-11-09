@@ -4,6 +4,24 @@
 #include "blas.h"
 #include "cdefs.h"
 
+#define BLOCKSIZE 8 // TODO check cache line explicitly
+
+// Copy lower triangle to upper
+static inline void symmetrize(const int n, double *restrict x)
+{
+  // #pragma omp parallel for default(none) shared(x) schedule(dynamic, 1) if(n>OMP_MIN_SIZE)
+  for (int j=0; j<n; j+=BLOCKSIZE)
+  {
+    for (int i=j+1; i<n; i+=BLOCKSIZE)
+    {
+      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
+      {
+        for (int row=i; row<i+BLOCKSIZE && row<n; ++row)
+          x[col + n*row] = x[row + n*col];
+      }
+    }
+  }
+}
 
 // upper triangle of t(x) %*% x
 int crossprod(const double alpha, cmat_r x, mat_r cp)
@@ -15,6 +33,8 @@ int crossprod(const double alpha, cmat_r x, mat_r cp)
   
   dsyrk_(&(char){'l'}, &(char){'t'}, &x->ncols, &x->nrows, &alpha, x->data,
     &x->nrows, &(double){0.0}, cp->data, &x->ncols);
+  
+  symmetrize(cp->nrows, cp->data);
   
   return info;
 }
@@ -28,8 +48,6 @@ int crossprod_a(const double alpha, cmat_r x, mat_r cp)
   return crossprod(alpha, x, cp);
 }
 
-
-
 int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
 {
   CHECKIFSAME(x, tcp);
@@ -39,6 +57,8 @@ int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
   
   dsyrk_(&(char){'l'}, &(char){'n'}, &x->nrows, &x->ncols, &alpha, x->data,
     &x->nrows, &(double){0.0}, tcp->data, &x->nrows);
+    
+  symmetrize(tcp->nrows, tcp->data);
   
   return info;
 }
