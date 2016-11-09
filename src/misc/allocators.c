@@ -32,11 +32,17 @@ static inline int _bib_allocator(clen_t len, double **data)
 dvector_t *newvec(clen_t len, double *data)
 {
   dvector_t *ret = malloc(sizeof(*ret));
-  ret->len = len;
-  int check = _bib_allocator(len, &data);
-  // if (check != LIBBIB_OK)
-    // TODO
+  if (ret == NULL)
+    return NULL;
   
+  int check = _bib_allocator(len, &data);
+  if (check != LIBBIB_OK)
+  {
+    free(ret);
+    return NULL;
+  }
+  
+  ret->len = len;
   ret->data = data;
   
   return ret;
@@ -61,11 +67,17 @@ int setvec(clen_t len, double *data, dvector_t *v)
 dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
 {
   dmatrix_t *ret = malloc(sizeof(*ret));
+  if (ret == NULL)
+    return NULL;
+  
   ret->nrows = nrows;
   ret->ncols = ncols;
   int check = _bib_allocator(nrows*ncols, &data);
-  // if (check != LIBBIB_OK)
-    // TODO
+  if (check != LIBBIB_OK)
+  {
+    free(ret);
+    return NULL;
+  }
   
   ret->data = data;
   
