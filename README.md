@@ -1,20 +1,20 @@
 # libbib
 
-BIB is the Basic Interface for the BLAS (and LAPACK).
+BIB is the Basic Interface for the BLAS (and LAPACK), a basic C interface to computational linear algebra.
 
-The BLAS and LAPACK are wonderful, but very difficult to use until you understand their strange syntax and formulation.  Mastering this can 
+The BLAS and LAPACK are wonderful libraries, but very difficult to use until you understand their strange syntax and formulation.  Mastering their strange way of thinking can lead to hilariously high-performance code.  But most use-cases don't require their full power.
 
-BIB does away with a lot of the powerful but complicated options in BLAS/LAPACK.  For example, `INCX` arguments for vector operations are always 1, and `LDA` parameters for matrices are always the number of rows of the matrix.  This cost is necessary in order to produce simple, clean interfaces.  If you find this overly restrictive, my opinion is that you should learn to use the BLAS/LAPACK natively.
+BIB does away with a lot of these powerful-but-complicated options.  For example, `INCX` arguments for vector operations are always 1, and `LDA` parameters for matrices are always the number of rows of the matrix.  This cost is necessary in order to produce simple, clean interfaces.  If you find this overly restrictive, my opinion is that you should learn to use the BLAS/LAPACK natively.
 
 
 
 ## Building and Installation
 
+For the moment, just run
 
+`make`
 
-
-## Example Usage
-
+in the project root to build the static library.  Eventually this will be a proper build system.
 
 
 
