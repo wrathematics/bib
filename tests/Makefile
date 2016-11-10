@@ -3,11 +3,12 @@ CFLAGS=-std=c99 -O3 -Wall -pedantic -fopenmp
 LDFLAGS=../libbib.a -llapack -lblas -lm
 
 
-all: clean level2
+all: Rpkg
 
-level2: 
-	$(CC) $(CFLAGS) level2.c -o level2 $(LDFLAGS)
+Rpkg: clean
+	R CMD INSTALL Rpkg
 
 
 clean:
-	rm -f level2
+	cd Rpkg && ./cleanup
+

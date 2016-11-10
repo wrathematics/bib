@@ -10,6 +10,8 @@ m = 10
 n = 3
 x = matrix(rnorm(m*n), m, n)
 
+cat("# Level 2")
+
 
 TESTING("crossprod")
 test = bib_crossprod(x)
@@ -38,3 +40,6 @@ truth = t(x) %*% y
 dim(truth) <- NULL
 CHECK(test, truth)
 OK()
+
+
+cat("\n")
