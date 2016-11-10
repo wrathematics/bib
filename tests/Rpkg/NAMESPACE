@@ -2,6 +2,7 @@
 
 export(bib_crossprod)
 export(bib_dotprod)
+export(bib_mmprod)
 export(bib_mvprod)
 export(bib_tcrossprod)
 export(bib_vnorm)
