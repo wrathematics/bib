@@ -44,7 +44,7 @@ static inline double dnrm2(int n, double *restrict x, int incx)
 
 double vnorm(cvec_r x)
 {
-  return dnrm2(x->len, x->data, 0);
+  return dnrm2(x->len, x->data, 1);
 }
 
 
