@@ -20,4 +20,11 @@ CHECK(test, truth)
 OK()
 
 
+TESTING("vnorm")
+test = bib_vnorm(x)
+truth = sqrt(sum(x*x))
+CHECK(test, truth)
+OK()
+
+
 cat("\n")

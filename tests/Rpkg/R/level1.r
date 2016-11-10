@@ -5,3 +5,10 @@ bib_dotprod = function(x, y)
   storage.mode(y) = "double"
   .Call("bib_dotprod_", x, y)
 }
+
+#' @export
+bib_vnorm = function(x)
+{
+  storage.mode(x) = "double"
+  .Call("bib_vnorm_", x)
+}
