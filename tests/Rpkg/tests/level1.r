@@ -26,5 +26,12 @@ truth = sqrt(sum(x*x))
 CHECK(test, truth)
 OK()
 
+TESTING("vcopy and vscale")
+alpha = 3.14159
+test = bib_vscale(alpha, x)
+truth = alpha*x
+CHECK(test, truth)
+OK()
+
 
 cat("\n")

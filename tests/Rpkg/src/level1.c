@@ -32,3 +32,21 @@ SEXP bib_vnorm_(SEXP x)
   unhideGC();
   return ret;
 }
+
+
+SEXP bib_vscale_(SEXP alpha, SEXP x)
+{
+  dvector_t in1, in2;
+  const int len = LENGTH(x);
+  SEXP ret;
+  newRvec(ret, len, "dbl");
+  
+  setvec(len, REAL(x), &in1);
+  setvec(len, REAL(ret), &in2);
+  
+  vcopy(&in1, &in2);
+  vscale(DBL(alpha), &in2);
+  
+  unhideGC();
+  return ret;
+}
