@@ -1,0 +1,14 @@
+Package: BIBtests
+Title: BIB Tests
+Version: 0.1-0
+Depends:
+    R (>= 2.14.0)
+Authors@R: c(person("Drew", "Schmidt", role = c("aut", "cre"), 
+        email = "wrathematics@gmail.com"))
+Description: BIB tests.
+License: BSD 2-clause License + file LICENSE
+NeedsCompilation: yes
+Maintainer: Drew Schmidt <wrathematics@gmail.com>
+URL: https://github.com/wrathematics/bib
+BugReports: https://github.com/wrathematics/bib/issues
+RoxygenNote: 5.0.1
