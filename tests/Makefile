@@ -5,7 +5,10 @@ LDFLAGS=../libbib.a -llapack -lblas -lm
 
 all: Rpkg
 
-Rpkg: clean
+redocument:
+	cd Rpkg && redocument
+
+Rpkg: redocument 
 	R CMD INSTALL Rpkg
 
 

@@ -10,7 +10,7 @@ m = 10
 n = 3
 x = matrix(rnorm(m*n), m, n)
 
-cat("# Level 2")
+cat("# Level 2\n")
 
 
 TESTING("crossprod")
