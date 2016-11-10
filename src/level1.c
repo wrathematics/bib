@@ -55,7 +55,7 @@ int vswap(cvec_r x, vec_r y)
   if (x->len != y->len)
     return LIBBIB_INDIMMISMATCH;
   
-  dswap_(&x->len, x->data, &(int){0}, y->data, &(int){0});
+  dswap_(&x->len, x->data, &(int){1}, y->data, &(int){1});
   
   return LIBBIB_OK;
 }
@@ -68,7 +68,7 @@ int vcopy(cvec_r x, vec_r y)
   if (x->len != y->len)
     return LIBBIB_INDIMMISMATCH;
   
-  dcopy_(&x->len, x->data, &(int){0}, y->data, &(int){0});
+  dcopy_(&x->len, x->data, &(int){1}, y->data, &(int){1});
   
   return LIBBIB_OK;
 }
@@ -77,5 +77,5 @@ int vcopy(cvec_r x, vec_r y)
 
 void vscale(const double alpha, vec_r x)
 {
-  dscal_(&x->len, &alpha, x->data, &(int){0});
+  dscal_(&x->len, &alpha, x->data, &(int){1});
 }
