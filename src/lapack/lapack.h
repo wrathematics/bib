@@ -2,6 +2,11 @@
 #define LIBBIB_LAPACK_H_
 
 
+// auxiliary routines
+void dlacpy_(const char *uplo, const int *m, const int *n, const double *a,
+  const int *lda, double *b, const int *ldb);
+
+// the rest
 void dlassq_(int *n, double *x, int *incx, double *scale, double *sumsq);
 
 void dgeqrf_(const int *m, const int *n, double *restrict a, const int *lda, 
@@ -30,4 +35,3 @@ void dgeev_(char *jobvl, char *jobvr, int *n, double *a, int *lda, double *wr, d
 
 
 #endif
-

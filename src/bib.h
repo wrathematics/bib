@@ -10,6 +10,9 @@
 // lapack/
 // ----------------------------------------------------------------------------
 
+// auxiliary.c
+void mcopy(cmat_r x, mat_r y);
+
 // lu.c
 int invert(mat_r x);
 
