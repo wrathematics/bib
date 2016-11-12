@@ -43,8 +43,8 @@ void bib_errcheck(const int err);
 bool is_sym(cmat_r x);
 
 // rev.c
-void reverse_vec(vec_r x);
-void reverse_mat(mat_r x);
+void vrev(vec_r x);
+void mrev(mat_r x);
 
 // xpose.c
 int xpose(cmat_r x, mat_r tx);

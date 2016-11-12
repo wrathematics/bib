@@ -2,7 +2,7 @@
 #include "safeomp.h"
 
 
-void reverse_vec(vec_r x)
+void vrev(vec_r x)
 {
   int j = x->len-1;
   double *const x_data = x->data;
@@ -19,7 +19,7 @@ void reverse_vec(vec_r x)
 
 
 
-void reverse_mat(mat_r x)
+void mrev(mat_r x)
 {
   const int m = x->nrows;
   const int n = x->ncols;
