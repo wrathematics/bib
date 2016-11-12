@@ -38,5 +38,13 @@ typedef struct svd_t
   int info;
 } svd_t;
 
+typedef struct svdparam_t
+{
+  bool inplace;
+  bool retu;
+  bool retvt;
+  bool descending;
+} svdparam_t;
+
 
 #endif
