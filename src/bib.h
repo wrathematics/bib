@@ -16,6 +16,10 @@ void mcopy(cmat_r x, mat_r y);
 // lu.c
 int invert(mat_r x);
 
+// svd.c
+int bib_svd(const svdparam_t *const p, mat_r x, svd_t *restrict svd);
+int bib_svd_a(const svdparam_t *const p, mat_r x, svd_t *restrict svd);
+
 
 
 // ----------------------------------------------------------------------------
