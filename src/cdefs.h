@@ -21,7 +21,7 @@
 
 #define CHECKMALLOC(x) if (x == NULL) return LIBBIB_BADMALLOC
 #define CHECKRET(ret)  if (ret != 0)  return ret
-#define CHECKIFSAME(x,y) if(x==0) return LIBBIB_RESTRICTFAIL
+#define CHECKIFSAME(x,y) if (x==y) return LIBBIB_RESTRICTFAIL
 
 
 #endif
