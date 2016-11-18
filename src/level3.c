@@ -50,3 +50,28 @@ int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
   
   return LIBBIB_OK;
 }
+
+
+
+int mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
+{
+  CHECKIFSAME(x, ret);
+  CHECKIFSAME(y, ret);
+  
+  const len_t nrows = x->nrows;
+  const len_t ncols = x->ncols;
+  
+  if (y->nrows != nrows || y->ncols != ncols)
+    return LIBBIB_INDIMMISMATCH;
+  
+  for (int j=0; j<ncols; j++)
+  {
+    for (int i=0; i<nrows; i++)
+    {
+      const len_t ind = i + nrows*j;
+      DATA(ret)[ind] = DATA(x)[ind] + DATA(y)[ind];
+    }
+  }
+  
+  return LIBBIB_OK;
+}
