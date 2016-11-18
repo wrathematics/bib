@@ -9,8 +9,8 @@ int xpose(cmat_r x, mat_r tx)
 {
   CHECKIFSAME(x, tx);
   
-  const int m = x->nrows;
-  const int n = x->ncols;
+  const len_t m = x->nrows;
+  const len_t n = x->ncols;
   const double *const x_data = x->data;
   double *const tx_data = tx->data;
   
@@ -18,13 +18,13 @@ int xpose(cmat_r x, mat_r tx)
     return LIBBIB_INDIMMISMATCH;
   
   #pragma omp parallel for default(none) schedule(dynamic, 1) if(n>OMP_MIN_SIZE)
-  for (int j=0; j<n; j+=BLOCKSIZE)
+  for (len_t j=0; j<n; j+=BLOCKSIZE)
   {
-    for (int i=0; i<m; i+=BLOCKSIZE)
+    for (len_t i=0; i<m; i+=BLOCKSIZE)
     {
-      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
+      for (len_t col=j; col<j+BLOCKSIZE && col<n; ++col)
       {
-        for (int row=i; row<i+BLOCKSIZE && row<m; ++row)
+        for (len_t row=i; row<i+BLOCKSIZE && row<m; ++row)
           tx_data[col + n*row] = x_data[row + m*col];
       }
     }

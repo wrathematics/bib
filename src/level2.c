@@ -7,16 +7,16 @@
 #define BLOCKSIZE 8 // TODO check cache line explicitly
 
 // Copy lower triangle to upper
-static inline void symmetrize(const int n, double *restrict x)
+static inline void symmetrize(const len_t n, double *restrict x)
 {
   // #pragma omp parallel for default(none) shared(x) schedule(dynamic, 1) if(n>OMP_MIN_SIZE)
-  for (int j=0; j<n; j+=BLOCKSIZE)
+  for (len_t j=0; j<n; j+=BLOCKSIZE)
   {
-    for (int i=j+1; i<n; i+=BLOCKSIZE)
+    for (len_t i=j+1; i<n; i+=BLOCKSIZE)
     {
-      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
+      for (len_t col=j; col<j+BLOCKSIZE && col<n; ++col)
       {
-        for (int row=i; row<i+BLOCKSIZE && row<n; ++row)
+        for (len_t row=i; row<i+BLOCKSIZE && row<n; ++row)
           x[col + n*row] = x[row + n*col];
       }
     }

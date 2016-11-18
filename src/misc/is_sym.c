@@ -20,13 +20,13 @@ bool is_sym(cmat_r x)
   
   const double * const x_data = x->data;
   
-  for (int j=0; j<n; j+=BLOCKSIZE)
+  for (len_t j=0; j<n; j+=BLOCKSIZE)
   {
-    for (int i=j; i<n; i+=BLOCKSIZE)
+    for (len_t i=j; i<n; i+=BLOCKSIZE)
     {
-      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
+      for (len_t col=j; col<j+BLOCKSIZE && col<n; ++col)
       {
-        for (int row=i; row<i+BLOCKSIZE && row<n; ++row)
+        for (len_t row=i; row<i+BLOCKSIZE && row<n; ++row)
         {
           const bool check = samenum(x_data[col + n*row], x_data[row + n*col]);
           if (!check)

@@ -10,7 +10,7 @@ int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
   // m = # rows of op(x)
   // n = # cols of op(y)
   // k = # cols of op(x)
-  int im, in, ik;
+  len_t im, in, ik;
   char ctransx, ctransy;
   
   
@@ -64,9 +64,9 @@ int mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
   if (y->nrows != nrows || y->ncols != ncols)
     return LIBBIB_INDIMMISMATCH;
   
-  for (int j=0; j<ncols; j++)
+  for (len_t j=0; j<ncols; j++)
   {
-    for (int i=0; i<nrows; i++)
+    for (len_t i=0; i<nrows; i++)
     {
       const len_t ind = i + nrows*j;
       DATA(ret)[ind] = DATA(x)[ind] + DATA(y)[ind];
