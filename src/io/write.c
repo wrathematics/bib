@@ -43,6 +43,15 @@ static int writemat_ascii_arma(FILE *fp, cmat_r x)
 
 
 
+static int writemat_binary(FILE *fp, cmat_r x)
+{
+  fwrite(x, sizeof(*x), 1, fp);
+  
+  return LIBBIB_OK;
+}
+
+
+
 int bib_mwrite(const char *file, cmat_r x, const int method)
 {
   int ret;
@@ -56,6 +65,8 @@ int bib_mwrite(const char *file, cmat_r x, const int method)
     ret = writemat_ascii_csv(fp, x);
   else if (method == LIBBIB_IO_ASCII_ARMA)
     ret = writemat_ascii_arma(fp, x);
+  else if (method == LIBBIB_IO_BINARY)
+    ret = writemat_binary(fp, x);
   else
     ret = LIBBIB_IO_BADMETHOD;
   
