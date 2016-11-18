@@ -8,6 +8,7 @@
 typedef int32_t len_t;
 typedef int64_t lenprod_t; // storage for len_t*len_t
 typedef const len_t clen_t;
+typedef const lenprod_t clenprod_t;
 
 // dense matrix
 typedef struct dmatrix
