@@ -9,10 +9,14 @@
 
 int bib_svd(const svdparam_t *const p, mat_r x, svd_t *const restrict svd)
 {
+  CHECKIFSAME(x, svd->u);
+  CHECKIFSAME(x, svd->vt);
+  
   char jobz;
   int info = 0;
+  int ret = LIBBIB_OK;
   int lwork, *iwork;
-  double tmp, *work, *x_cp;
+  double tmp, *work=NULL, *x_cp;
   const int m = x->nrows;
   const int n = x->ncols;
   const bool inplace = p->inplace;
@@ -41,50 +45,47 @@ int bib_svd(const svdparam_t *const p, mat_r x, svd_t *const restrict svd)
   iwork = malloc(8*minmn * sizeof(*iwork));
   if (iwork == NULL)
   {
-    if (!inplace)
-      free(x_cp);
-    return LIBBIB_BADMALLOC;
+    ret = LIBBIB_BADMALLOC;
+    goto cleanup;
   }
   
   lwork = -1;
   dgesdd_(&jobz, &m, &n, x_cp, &m, svd->d->data, svd->u->data, &m, svd->vt->data, &minmn, &tmp, &lwork, iwork, &info);
   if (info != 0)
   {
-    svd->info = info;
-    if (!inplace)
-      free(x_cp);
-    free(iwork);
-    return LIBBIB_LAPACKERR;
+    ret = LIBBIB_LAPACKERR;
+    goto cleanup;
   }
   
   lwork = (int) tmp;
   work = malloc(lwork * sizeof(*work));
   if (work == NULL)
   {
-    if (!inplace)
-      free(x_cp);
-    free(iwork);
+    ret = LIBBIB_BADMALLOC;
+    goto cleanup;
   }
   
   dgesdd_(&jobz, &m, &n, x_cp, &m, svd->d->data, svd->u->data, &m, svd->vt->data, &minmn, work, &lwork, iwork, &info);
   
   svd->info = info;
   
+cleanup:
   if (!inplace)
     free(x_cp);
-  free(work);
-  free(iwork);
+  if (work != NULL)
+    free(work);
+  if (iwork != NULL)
+    free(iwork);
   
-  return LIBBIB_OK;
+  svd->info = info;
+  
+  return ret;
 }
 
 
 
 int bib_svd_a(const svdparam_t *const p, mat_r x, svd_t *restrict svd)
 {
-  CHECKIFSAME(x, svd->u);
-  CHECKIFSAME(x, svd->vt);
-  
   const int m = x->nrows;
   const int n = x->ncols;
   const int minmn = m<n ? m : n;
