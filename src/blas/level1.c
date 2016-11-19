@@ -1,8 +1,8 @@
 #include <math.h>
 
 #include "blas.h"
-#include "cdefs.h"
-#include "types.h"
+#include "../cdefs.h"
+#include "../types.h"
 
 
 // C ddot replica using dgemm

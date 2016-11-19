@@ -1,8 +1,8 @@
-#include "bib.h"
-
 #include "blas.h"
-#include "types.h"
-#include "cdefs.h"
+
+#include "../bib.h"
+#include "../types.h"
+#include "../cdefs.h"
 
 
 int bib_mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)

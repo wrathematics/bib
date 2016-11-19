@@ -1,10 +1,12 @@
 #include <stdlib.h>
 
-#include "bib.h"
 #include "blas.h"
-#include "cdefs.h"
+
+#include "../bib.h"
+#include "../cdefs.h"
 
 #define BLOCKSIZE 8 // TODO check cache line explicitly
+
 
 // Copy lower triangle to upper
 static inline void symmetrize(const len_t n, double *restrict x)
