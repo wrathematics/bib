@@ -50,6 +50,10 @@ void freevec(dvector_t *v);
 void freeivec(ivector_t *v);
 void freemat(dmatrix_t *m);
 
+// diag.c
+int bib_diag(cmat_r x, vec_r d);
+int bib_diag_a(cmat_r x, dvector_t **d);
+
 // error.c
 void bib_errcheck(const int err);
 
