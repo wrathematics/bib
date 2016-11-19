@@ -7,6 +7,38 @@
 
 
 // ----------------------------------------------------------------------------
+// funs/
+// ----------------------------------------------------------------------------
+
+// abs.c
+void bib_mabs(mat_r x);
+
+// minmax.c
+double bib_vmin(cvec_r x);
+double bib_mmin(cmat_r x);
+double bib_vmax(cvec_r x);
+double bib_mmax(cmat_r x);
+
+// trace.c
+double bib_trace(cmat_r x);
+
+
+
+// ----------------------------------------------------------------------------
+// gen/
+// ----------------------------------------------------------------------------
+
+// eye.c
+int bib_eye(dmatrix_t *x);
+int bib_eye_a(clen_t nrows, clen_t ncols, dmatrix_t **x);
+
+// zeroes.c
+int bib_zeroes(dmatrix_t *x);
+int bib_zeroes_a(clen_t nrows, clen_t ncols, dmatrix_t **x);
+
+
+
+// ----------------------------------------------------------------------------
 // io/
 // ----------------------------------------------------------------------------
 
