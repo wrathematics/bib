@@ -5,7 +5,7 @@
 
 #define BLOCKSIZE 8 // TODO check cache line explicitly
 
-int xpose(cmat_r x, mat_r tx)
+int bib_xpose(cmat_r x, mat_r tx)
 {
   CHECKIFSAME(x, tx);
   
@@ -34,11 +34,12 @@ int xpose(cmat_r x, mat_r tx)
   return LIBBIB_OK;
 }
 
-int xpose_a(cmat_r x, mat_r tx)
+int bib_xpose_a(cmat_r x, dmatrix_t **restrict tx)
 {
-  CHECKIFSAME(x, tx);
-  int check = setmat(x->ncols, x->nrows, NULL, tx);
-  CHECKRET(check);
+  CHECKIFSAME(x, *tx);
+  *tx = newmat(NCOLS(x), NROWS(x));
+  if (DATA(*tx) == NULL)
+    return LIBBIB_BADMALLOC;
   
-  return xpose(x, tx);
+  return bib_xpose(x, *tx);
 }

@@ -12,7 +12,7 @@ static inline bool samenum(const double x, const double y)
   return (fabs(x-y) < EPS);
 }
 
-bool is_sym(cmat_r x)
+bool bib_is_sym(cmat_r x)
 {
   const int n = x->nrows;
   if (n != x->ncols)

@@ -20,8 +20,9 @@ int bib_mwrite(const char *file, cmat_r x, const int method);
 // lapack/
 // ----------------------------------------------------------------------------
 
-// auxiliary.c
-void mcopy(cmat_r x, mat_r y);
+// copy.c
+int bib_mcopy(cmat_r x, mat_r y);
+int bib_mcopy_a(cmat_r x, dmatrix_t **restrict y);
 
 // lu.c
 int bib_invert(mat_r x);
@@ -53,15 +54,15 @@ void freemat(dmatrix_t *m);
 void bib_errcheck(const int err);
 
 // is_sym.c
-bool is_sym(cmat_r x);
+bool bib_is_sym(cmat_r x);
 
 // rev.c
-void vrev(vec_r x);
-void mrev(mat_r x);
+void bib_vrev(vec_r x);
+void bib_mrev(mat_r x);
 
 // xpose.c
-int xpose(cmat_r x, mat_r tx);
-int xpose_a(cmat_r x, mat_r tx);
+int bib_xpose(cmat_r x, mat_r tx);
+int bib_xpose_a(cmat_r x, dmatrix_t **restrict tx);
 
 
 

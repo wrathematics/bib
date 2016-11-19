@@ -2,7 +2,7 @@
 #include "safeomp.h"
 
 
-void vrev(vec_r x)
+void bib_vrev(vec_r x)
 {
   len_t j = x->len-1;
   double *const x_data = x->data;
@@ -19,7 +19,7 @@ void vrev(vec_r x)
 
 
 
-void mrev(mat_r x)
+void bib_mrev(mat_r x)
 {
   const len_t m = x->nrows;
   const len_t n = x->ncols;
