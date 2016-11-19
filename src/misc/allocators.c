@@ -52,8 +52,9 @@ static inline int _bib_allocator_int(clen_t len, int **data)
 
 
 
-dvector_t *newvec(clen_t len, double *data)
+dvector_t *newvec(clen_t len)
 {
+  double *data = NULL;
   dvector_t *ret = malloc(sizeof(*ret));
   if (ret == NULL)
     return NULL;
@@ -87,8 +88,9 @@ int setvec(clen_t len, double *data, dvector_t *v)
 
 
 
-ivector_t *newivec(clen_t len, int *data)
+ivector_t *newivec(clen_t len)
 {
+  int *data = NULL;
   ivector_t *ret = malloc(sizeof(*ret));
   if (ret == NULL)
     return NULL;
@@ -108,8 +110,9 @@ ivector_t *newivec(clen_t len, int *data)
 
 
 
-dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
+dmatrix_t *newmat(clen_t nrows, clen_t ncols)
 {
+  double *data = NULL;
   dmatrix_t *ret = malloc(sizeof(*ret));
   if (ret == NULL)
     return NULL;
@@ -150,6 +153,17 @@ void freevec(dvector_t *v)
   free(DATA(v));
   DATA(v) = NULL;
   LENGTH(v) = 0;
+  free(v);
+  v = NULL;
+}
+
+void freeivec(ivector_t *v)
+{
+  free(DATA(v));
+  DATA(v) = NULL;
+  LENGTH(v) = 0;
+  free(v);
+  v = NULL;
 }
 
 void freemat(dmatrix_t *m)
@@ -158,4 +172,6 @@ void freemat(dmatrix_t *m)
   DATA(m) = NULL;
   NROWS(m) = 0;
   NCOLS(m) = 0;
+  free(m);
+  m = NULL;
 }
