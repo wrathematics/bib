@@ -12,8 +12,8 @@ SEXP bib_invert_(SEXP x)
   setmat(n, n, REAL(x), &in);
   setmat(n, n, REAL(ret), &out);
   
-  mcopy(&in, &out);
-  int check = invert(&out);
+  bib_mcopy(&in, &out);
+  int check = bib_invert(&out);
   if (check)
     error("check=%d\n", check);
   

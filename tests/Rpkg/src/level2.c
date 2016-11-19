@@ -13,7 +13,7 @@ SEXP bib_crossprod_(SEXP x)
   setmat(m, n, REAL(x), &in);
   setmat(n, n, REAL(ret), &out);
   
-  int check = crossprod(1.0, &in, &out);
+  int check = bib_crossprod(1.0, &in, &out);
   if (check)
     error("check=%d\n", check);
   
@@ -32,7 +32,7 @@ SEXP bib_tcrossprod_(SEXP x)
   setmat(m, n, REAL(x), &in);
   setmat(m, m, REAL(ret), &out);
   
-  int check = tcrossprod(1.0, &in, &out);
+  int check = bib_tcrossprod(1.0, &in, &out);
   if (check)
     error("check=%d\n", check);
   
@@ -56,7 +56,7 @@ SEXP bib_mvprod_(SEXP trans_, SEXP x, SEXP y)
   setvec(insize, REAL(y), &in2);
   setvec(outsize, REAL(ret), &out);
   
-  int check = mvprod(trans, 1.0, &in1, &in2, &out);
+  int check = bib_mvprod(trans, 1.0, &in1, &in2, &out);
   if (check)
     error("check=%d\n", check);
   

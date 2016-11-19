@@ -12,7 +12,7 @@ SEXP bib_dotprod_(SEXP x, SEXP y)
   setvec(len, REAL(x), &in1);
   setvec(len, REAL(y), &in2);
   
-  DBL(ret) = dotprod(&in1, &in2);
+  DBL(ret) = bib_dotprod(&in1, &in2);
   
   unhideGC();
   return ret;
@@ -27,7 +27,7 @@ SEXP bib_vnorm_(SEXP x)
   
   setvec(len, REAL(x), &in);
   
-  DBL(ret) = vnorm(&in);
+  DBL(ret) = bib_vnorm(&in);
   
   unhideGC();
   return ret;
@@ -44,8 +44,8 @@ SEXP bib_vscale_(SEXP alpha, SEXP x)
   setvec(len, REAL(x), &in1);
   setvec(len, REAL(ret), &in2);
   
-  vcopy(&in1, &in2);
-  vscale(DBL(alpha), &in2);
+  bib_vcopy(&in1, &in2);
+  bib_vscale(DBL(alpha), &in2);
   
   unhideGC();
   return ret;

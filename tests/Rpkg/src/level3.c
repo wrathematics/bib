@@ -15,7 +15,7 @@ SEXP bib_mmprod_(SEXP x, SEXP y)
   setmat(n, k, REAL(y), &in2);
   setmat(m, k, REAL(ret), &out);
   
-  int check = mmprod(false, false, &in1, &in2, &out);
+  int check = bib_mmprod(false, false, &in1, &in2, &out);
   if (check)
     error("check=%d\n", check);
   
