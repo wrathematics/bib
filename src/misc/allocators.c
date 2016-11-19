@@ -42,8 +42,8 @@ dvector_t *newvec(clen_t len, double *data)
     return NULL;
   }
   
-  ret->len = len;
-  ret->data = data;
+  LENGTH(ret) = len;
+  DATA(ret) = data;
   
   return ret;
 }
@@ -57,8 +57,8 @@ int setvec(clen_t len, double *data, dvector_t *v)
       return check;
   }
   
-  v->len = len;
-  v->data = data;
+  LENGTH(v) = len;
+  DATA(v) = data;
   return LIBBIB_OK;
 }
 
@@ -70,8 +70,8 @@ dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
   if (ret == NULL)
     return NULL;
   
-  ret->nrows = nrows;
-  ret->ncols = ncols;
+  NROWS(ret) = nrows;
+  NCOLS(ret) = ncols;
   int check = _bib_allocator(nrows*ncols, &data);
   if (check != LIBBIB_OK)
   {
@@ -79,7 +79,7 @@ dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
     return NULL;
   }
   
-  ret->data = data;
+  DATA(ret) = data;
   
   return ret;
 }
@@ -93,9 +93,9 @@ int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m)
       return check;
   }
   
-  m->nrows = nrows;
-  m->ncols = ncols;
-  m->data = data;
+  NROWS(m) = nrows;
+  NCOLS(m) = ncols;
+  DATA(m) = data;
   return LIBBIB_OK;
 }
 
@@ -103,15 +103,15 @@ int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m)
 
 void freevec(dvector_t *v)
 {
-  free(v->data);
-  v->data = NULL;
-  v->len = 0;
+  free(DATA(v));
+  DATA(v) = NULL;
+  LENGTH(v) = 0;
 }
 
 void freemat(dmatrix_t *m)
 {
-  free(m->data);
-  m->data = NULL;
-  m->nrows = 0;
-  m->ncols = 0;
+  free(DATA(m));
+  DATA(m) = NULL;
+  NROWS(m) = 0;
+  NCOLS(m) = 0;
 }
