@@ -7,6 +7,16 @@
 
 
 // ----------------------------------------------------------------------------
+// io/
+// ----------------------------------------------------------------------------
+
+int bib_mprint(cmat_r x);
+int bib_mread(const char *file, dmatrix_t **x, const int method);
+int bib_mwrite(const char *file, cmat_r x, const int method);
+
+
+
+// ----------------------------------------------------------------------------
 // lapack/
 // ----------------------------------------------------------------------------
 
@@ -14,7 +24,7 @@
 void mcopy(cmat_r x, mat_r y);
 
 // lu.c
-int invert(mat_r x);
+int bib_invert(mat_r x);
 
 // svd.c
 int bib_svd(const svdparam_t *const p, mat_r x, svd_t *restrict svd);
@@ -27,13 +37,16 @@ int bib_svd_a(const svdparam_t *const p, mat_r x, svd_t *restrict svd);
 // ----------------------------------------------------------------------------
 
 // allocators.c
-dvector_t *newvec(clen_t len, double *data);
+dvector_t *newvec(clen_t len);
 int setvec(clen_t len, double *data, dvector_t *v);
 
-dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data);
+ivector_t *newivec(clen_t len);
+
+dmatrix_t *newmat(clen_t nrows, clen_t ncols);
 int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m);
 
 void freevec(dvector_t *v);
+void freeivec(ivector_t *v);
 void freemat(dmatrix_t *m);
 
 // error.c
