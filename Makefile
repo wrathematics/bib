@@ -3,10 +3,13 @@ CFLAGS=-std=c99 -O3 -Wall -pedantic -fopenmp
 LDFLAGS=-llapack -lblas -lm
 
 
+SRC_BLAS = $(wildcard src/blas/*.c)
 SRC_LAPACK = $(wildcard src/lapack/*.c)
+SRC_FUNS = $(wildcard src/funs/*.c)
+SRC_GEN = $(wildcard src/gen/*.c)
+SRC_IO = $(wildcard src/io/*.c)
 SRC_MISC = $(wildcard src/misc/*.c)
-SRC_MAIN = $(wildcard src/*.c)
-SRC = $(SRC_LAPACK) $(SRC_MISC) $(SRC_MAIN)
+SRC = $(SRC_BLAS) $(SRC_LAPACK) $(SRC_FUNS) $(SRC_GEN) $(SRC_IO) $(SRC_MISC) $(SRC_MAIN)
 OBJ = $(SRC:.c=.o)
 LIB = "libbib.a"
 
