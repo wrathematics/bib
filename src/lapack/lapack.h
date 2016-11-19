@@ -7,8 +7,6 @@ void dlacpy_(const char *uplo, const int *m, const int *n, const double *a,
   const int *lda, double *b, const int *ldb);
 
 // the rest
-void dlassq_(int *n, double *x, int *incx, double *scale, double *sumsq);
-
 void dgeqrf_(const int *m, const int *n, double *restrict a, const int *lda, 
   double *restrict tau, double *restrict work, const int *restrict lwork, 
   int *info);
@@ -32,6 +30,8 @@ void dsyevd_(const char *jobz, const char *uplo, const int *n, double *restrict 
 void dsyevr_(char *jobz, char *range, char *uplo, int *n, double *a, int *lda, double *vl, double *vu, int *il, int *iu, double *abstol, int *m, double *w, double *z, int *ldz, int *isuppz, double *work, int *lwork, int *iwork, int *liwork, int *info);
 
 void dgeev_(char *jobvl, char *jobvr, int *n, double *a, int *lda, double *wr, double *wi, double *vl, int *ldvl, double *vr, int *ldvr, double *work, int *lwork, int *info);
+
+void dgesv_(const int *n, const int *nrhs, double *a, const int *lda, int *ipiv, double *b, const int *ldb, int *info);
 
 
 #endif
