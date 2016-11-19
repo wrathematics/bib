@@ -24,95 +24,96 @@ static inline void symmetrize(const len_t n, double *restrict x)
 }
 
 // upper triangle of t(x) %*% x
-int crossprod(const double alpha, cmat_r x, mat_r cp)
+int bib_crossprod(const double alpha, cmat_r x, mat_r cp)
 {
   CHECKIFSAME(x, cp);
   int info = 0;
-  if (cp->nrows != x->ncols || cp->ncols != x->ncols)
+  if (NROWS(cp) != NCOLS(x) || NCOLS(cp) != NCOLS(x))
     return LIBBIB_RETDIMMISMATCH;
   
-  dsyrk_(&(char){'l'}, &(char){'t'}, &x->ncols, &x->nrows, &alpha, x->data,
-    &x->nrows, &(double){0.0}, cp->data, &x->ncols);
+  dsyrk_(&(char){'l'}, &(char){'t'}, &NCOLS(x), &NROWS(x), &alpha, DATA(x),
+    &NROWS(x), &(double){0.0}, DATA(cp), &NCOLS(x));
   
-  symmetrize(cp->nrows, cp->data);
+  symmetrize(NROWS(cp), DATA(cp));
   
   return info;
 }
 
-int crossprod_a(const double alpha, cmat_r x, mat_r cp)
+int bib_crossprod_a(const double alpha, cmat_r x, dmatrix_t **cp)
 {
-  CHECKIFSAME(x, cp);
-  int check = setmat(x->ncols, x->ncols, NULL, cp);
-  CHECKRET(check);
+  *cp = newmat(NCOLS(x), NCOLS(x));
+  CHECKMALLOC(*cp);
   
-  return crossprod(alpha, x, cp);
+  return bib_crossprod(alpha, x, *cp);
 }
 
-int tcrossprod(const double alpha, cmat_r x, mat_r tcp)
+
+
+int bib_tcrossprod(const double alpha, cmat_r x, mat_r tcp)
 {
   CHECKIFSAME(x, tcp);
   int info = 0;
-  if (tcp->nrows != x->nrows || tcp->ncols != x->nrows)
+  if (NROWS(tcp) != NROWS(x) || NCOLS(tcp) != NROWS(x))
     return LIBBIB_RETDIMMISMATCH;
   
-  dsyrk_(&(char){'l'}, &(char){'n'}, &x->nrows, &x->ncols, &alpha, x->data,
-    &x->nrows, &(double){0.0}, tcp->data, &x->nrows);
+  dsyrk_(&(char){'l'}, &(char){'n'}, &NROWS(x), &NCOLS(x), &alpha, DATA(x),
+    &NROWS(x), &(double){0.0}, DATA(tcp), &NROWS(x));
     
-  symmetrize(tcp->nrows, tcp->data);
+  symmetrize(NROWS(tcp), DATA(tcp));
   
   return info;
 }
 
-int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp)
+int bib_tcrossprod_a(const double alpha, cmat_r x, dmatrix_t **tcp)
 {
-  CHECKIFSAME(x, tcp);
-  int check = setmat(x->nrows, x->nrows, NULL, tcp);
-  CHECKRET(check);
+  *tcp = newmat(NROWS(x), NROWS(x));
+  CHECKMALLOC(*tcp);
   
-  return crossprod(alpha, x, tcp);
+  return bib_tcrossprod(alpha, x, *tcp);
 }
 
 
 
 // ret = alpha*x*y
-int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
+int bib_mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
 {
   CHECKIFSAME(y, ret);
   char t;
   if (trans)
   {
-    if (y->len != x->nrows)
+    if (LENGTH(y) != NROWS(x))
       return LIBBIB_INDIMMISMATCH;
-    else if (ret->len != x->ncols)
+    else if (LENGTH(ret) != NCOLS(x))
       return LIBBIB_RETDIMMISMATCH;
     
     t = 'T';
   }
   else
   {
-    if (y->len != x->ncols)
+    if (LENGTH(y) != NCOLS(x))
       return LIBBIB_INDIMMISMATCH;
-    else if (ret->len != x->nrows)
+    else if (LENGTH(ret) != NROWS(x))
       return LIBBIB_RETDIMMISMATCH;
     
     t = 'N';
   }
   
-  dgemv_(&t, &x->nrows, &x->ncols, &alpha, x->data, &x->nrows, y->data, &(int){1}, &(double){0.0}, ret->data, &(int){1});
+  dgemv_(&t, &NROWS(x), &NCOLS(x), &alpha, DATA(x), &NROWS(x), DATA(y), 
+    &(int){1}, &(double){0.0}, DATA(ret), &(int){1});
+  
   return LIBBIB_OK;
 }
 
-int mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret)
+int bib_mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, dvector_t **ret)
 {
-  CHECKIFSAME(y, ret);
   len_t len;
   if (trans)
-    len = x->ncols;
+    len = NCOLS(x);
   else
-    len = x->nrows;
+    len = NROWS(x);
   
-  int check = setvec(len, NULL, ret);
-  CHECKRET(check);
+  *ret = newvec(len);
+  CHECKMALLOC(*ret);
   
-  return mvprod(trans, alpha, x, y, ret);
+  return bib_mvprod(trans, alpha, x, y, *ret);
 }

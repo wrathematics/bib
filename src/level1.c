@@ -6,7 +6,7 @@
 
 
 // C ddot replica using dgemm
-double dotprod(cvec_r x, cvec_r y)
+double bib_dotprod(cvec_r x, cvec_r y)
 {
   if (x->len != y->len)
     return LIBBIB_INDIMMISMATCH;
@@ -42,14 +42,14 @@ static inline double dnrm2(int n, double *restrict x, int incx)
   return norm;
 }
 
-double vnorm(cvec_r x)
+double bib_vnorm(cvec_r x)
 {
   return dnrm2(x->len, x->data, 1);
 }
 
 
 
-int vswap(cvec_r x, vec_r y)
+int bib_vswap(cvec_r x, vec_r y)
 {
   CHECKIFSAME(x, y);
   if (x->len != y->len)
@@ -62,7 +62,7 @@ int vswap(cvec_r x, vec_r y)
 
 
 
-int vcopy(cvec_r x, vec_r y)
+int bib_vcopy(cvec_r x, vec_r y)
 {
   CHECKIFSAME(x, y);
   if (x->len != y->len)
@@ -75,7 +75,8 @@ int vcopy(cvec_r x, vec_r y)
 
 
 
-void vscale(const double alpha, vec_r x)
+int bib_vscale(const double alpha, vec_r x)
 {
   dscal_(&x->len, &alpha, x->data, &(int){1});
+  return LIBBIB_OK;
 }

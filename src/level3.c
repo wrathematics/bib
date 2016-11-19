@@ -1,8 +1,11 @@
+#include "bib.h"
+
 #include "blas.h"
 #include "types.h"
 #include "cdefs.h"
 
-int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
+
+int bib_mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
 {
   CHECKIFSAME(x, ret);
   CHECKIFSAME(y, ret);
@@ -23,45 +26,67 @@ int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
   {
     ctransx = 'T';
     
-    im = x->ncols;
-    ik = x->nrows;
+    im = NCOLS(x);
+    ik = NROWS(x);
     
     if (transy)
-      in = y->nrows;
+      in = NROWS(y);
     else
-      in = y->ncols;
+      in = NCOLS(y);
   }
   else
   {
     ctransx = 'N';
     
-    im = x->nrows;
-    ik = x->ncols;
+    im = NROWS(x);
+    ik = NCOLS(x);
     
     if (transy)
-      in = y->nrows;
+      in = NROWS(y);
     else
-      in = y->ncols;
+      in = NCOLS(y);
   }
   
   // TODO check for conformality
   
-  dgemm_(&ctransx, &ctransy, &im, &in, &ik, &(double){1.0}, x->data, &(x->nrows), y->data, &(y->nrows), &(double){0.0}, ret->data, &(ret->nrows));
+  dgemm_(&ctransx, &ctransy, &im, &in, &ik, &(double){1.0}, DATA(x), &NROWS(x), DATA(y), &NROWS(y), &(double){0.0}, DATA(ret), &NROWS(ret));
   
   return LIBBIB_OK;
 }
 
+int bib_mmprod_a(const bool transx, const bool transy, cmat_r x, cmat_r y, dmatrix_t **restrict ret)
+{
+  len_t nrows, ncols;
+  
+  if (transx)
+    nrows = NCOLS(x);
+  else
+    nrows = NROWS(x);
+  
+  if (transy)
+    ncols = NROWS(y);
+  else
+    ncols = NCOLS(y);
+  
+  *ret = newmat(nrows, ncols);
+  if (*ret == NULL)
+    return LIBBIB_BADMALLOC;
+  
+  return bib_mmprod(transx, transy, x, y, *ret);
+}
 
 
-int mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
+
+// FIXME drop transx/transy args?
+int bib_mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
 {
   CHECKIFSAME(x, ret);
   CHECKIFSAME(y, ret);
   
-  const len_t nrows = x->nrows;
-  const len_t ncols = x->ncols;
+  const len_t nrows = NROWS(x);
+  const len_t ncols = NCOLS(x);
   
-  if (y->nrows != nrows || y->ncols != ncols)
+  if (NROWS(y) != nrows || NCOLS(y) != ncols)
     return LIBBIB_INDIMMISMATCH;
   
   for (len_t j=0; j<ncols; j++)
@@ -74,4 +99,19 @@ int mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret)
   }
   
   return LIBBIB_OK;
+}
+
+int bib_mmadd_a(const bool transx, const bool transy, cmat_r x, cmat_r y, dmatrix_t **restrict ret)
+{
+  const len_t nrows = NROWS(x);
+  const len_t ncols = NCOLS(x);
+  
+  if (NROWS(y) != nrows || NCOLS(y) != ncols)
+    return LIBBIB_INDIMMISMATCH;
+  
+  *ret = newmat(nrows, ncols);
+  if (*ret == NULL)
+    return LIBBIB_BADMALLOC;
+  
+  return bib_mmadd(transx, transy, x, y, *ret);
 }

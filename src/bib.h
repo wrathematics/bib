@@ -71,24 +71,28 @@ int bib_xpose_a(cmat_r x, dmatrix_t **restrict tx);
 // ----------------------------------------------------------------------------
 
 // level1.c
-double dotprod(cvec_r x, cvec_r y);
-double vnorm(cvec_r x);
-int vswap(cvec_r x, vec_r y);
-int vcopy(cvec_r x, vec_r y);
-void vscale(const double alpha, vec_r x);
+double bib_dotprod(cvec_r x, cvec_r y);
+double bib_vnorm(cvec_r x);
+int bib_vswap(cvec_r x, vec_r y);
+int bib_vcopy(cvec_r x, vec_r y);
+void bib_vscale(const double alpha, vec_r x);
 
 // level2.c
-int crossprod(const double alpha, cmat_r x, mat_r cp);
-int crossprod_a(const double alpha, cmat_r x, mat_r cp);
+int bib_crossprod(const double alpha, cmat_r x, mat_r cp);
+int bib_crossprod_a(const double alpha, cmat_r x, dmatrix_t **cp);
 
-int tcrossprod(const double alpha, cmat_r x, mat_r tcp);
-int tcrossprod_a(const double alpha, cmat_r x, mat_r tcp);
+int bib_tcrossprod(const double alpha, cmat_r x, mat_r tcp);
+int bib_tcrossprod_a(const double alpha, cmat_r x, dmatrix_t **tcp);
 
-int mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret);
-int mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret);
+int bib_mvprod(const bool trans, const double alpha, cmat_r x, cvec_r y, vec_r ret);
+int bib_mvprod_a(const bool trans, const double alpha, cmat_r x, cvec_r y, dvector_t **ret);
 
 // level3.c
-int mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret);
+int bib_mmprod(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret);
+int bib_mmprod_a(const bool transx, const bool transy, cmat_r x, cmat_r y, dmatrix_t **restrict ret);
+
+int bib_mmadd(const bool transx, const bool transy, cmat_r x, cmat_r y, mat_r ret);
+int bib_mmadd_a(const bool transx, const bool transy, cmat_r x, cmat_r y, dmatrix_t **restrict ret);
 
 
 #endif
