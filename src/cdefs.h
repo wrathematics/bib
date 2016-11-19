@@ -17,6 +17,11 @@
 #define CHECKIFSAME(x,y) if (x==y) return LIBBIB_RESTRICTFAIL
 
 
+// I/O
+#define LIBBIB_IO_ASCII_CSV  0
+#define LIBBIB_IO_ASCII_ARMA 1
+#define LIBBIB_IO_BINARY     2
+
 // -------------------------------------------------------------
 // Error codes
 // -------------------------------------------------------------
@@ -29,11 +34,6 @@
 #define LIBBIB_RESTRICTFAIL    -13
 
 #define LIBBIB_LAPACKERR       -101
-
-// I/O
-#define LIBBIB_IO_ASCII_CSV  0
-#define LIBBIB_IO_ASCII_ARMA 1
-#define LIBBIB_IO_BINARY     2
 
 #define LIBBIB_IO_BADMETHOD -1001
 #define LIBBIB_READ_FAIL    -1002
