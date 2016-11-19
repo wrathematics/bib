@@ -8,14 +8,14 @@
 // C ddot replica using dgemm
 double bib_dotprod(cvec_r x, cvec_r y)
 {
-  if (x->len != y->len)
+  if (LENGTH(x) != LENGTH(y))
     return LIBBIB_INDIMMISMATCH;
   
   double dp;
   
-  dgemm_(&(char){'t'}, &(char){'n'}, &(int){1}, &(int){1}, &x->len,
-    &(double){1.0}, x->data, &x->len, y->data, &x->len, &(double){0.0}, &dp,
-    &(int){1});
+  dgemm_(&(char){'t'}, &(char){'n'}, &(int){1}, &(int){1}, &LENGTH(x),
+    &(double){1.0}, DATA(x), &LENGTH(x), DATA(y), &LENGTH(x), &(double){0.0},
+    &dp, &(int){1});
   
   return dp;
 }
@@ -44,7 +44,7 @@ static inline double dnrm2(int n, double *restrict x, int incx)
 
 double bib_vnorm(cvec_r x)
 {
-  return dnrm2(x->len, x->data, 1);
+  return dnrm2(LENGTH(x), DATA(x), 1);
 }
 
 
@@ -52,10 +52,10 @@ double bib_vnorm(cvec_r x)
 int bib_vswap(cvec_r x, vec_r y)
 {
   CHECKIFSAME(x, y);
-  if (x->len != y->len)
+  if (LENGTH(x) != LENGTH(y))
     return LIBBIB_INDIMMISMATCH;
   
-  dswap_(&x->len, x->data, &(int){1}, y->data, &(int){1});
+  dswap_(&LENGTH(x), DATA(x), &(int){1}, DATA(y), &(int){1});
   
   return LIBBIB_OK;
 }
@@ -65,10 +65,10 @@ int bib_vswap(cvec_r x, vec_r y)
 int bib_vcopy(cvec_r x, vec_r y)
 {
   CHECKIFSAME(x, y);
-  if (x->len != y->len)
+  if (LENGTH(x) != LENGTH(y))
     return LIBBIB_INDIMMISMATCH;
   
-  dcopy_(&x->len, x->data, &(int){1}, y->data, &(int){1});
+  dcopy_(&LENGTH(x), DATA(x), &(int){1}, DATA(y), &(int){1});
   
   return LIBBIB_OK;
 }
@@ -77,6 +77,6 @@ int bib_vcopy(cvec_r x, vec_r y)
 
 int bib_vscale(const double alpha, vec_r x)
 {
-  dscal_(&x->len, &alpha, x->data, &(int){1});
+  dscal_(&LENGTH(x), &alpha, DATA(x), &(int){1});
   return LIBBIB_OK;
 }
