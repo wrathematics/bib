@@ -4,11 +4,34 @@
 #include "../types.h"
 
 
-static inline int _bib_allocator(clen_t len, double **data)
+static inline int _bib_allocator_dbl(clen_t len, double **data)
 {
   if (*data != NULL)
   {
     double *tmp = realloc(*data, len  * sizeof(**data));
+    if (tmp == NULL)
+    {
+      // FIXME leave it for the user?
+      // free(*data);
+      return LIBBIB_BADMALLOC;
+    }
+    else
+      *data = tmp;
+  }
+  else
+  {
+    *data = malloc(len * sizeof(**data));
+    CHECKMALLOC(data);
+  }
+  
+  return LIBBIB_OK;
+}
+
+static inline int _bib_allocator_int(clen_t len, int **data)
+{
+  if (*data != NULL)
+  {
+    int *tmp = realloc(*data, len  * sizeof(**data));
     if (tmp == NULL)
     {
       // FIXME leave it for the user?
@@ -35,7 +58,7 @@ dvector_t *newvec(clen_t len, double *data)
   if (ret == NULL)
     return NULL;
   
-  int check = _bib_allocator(len, &data);
+  int check = _bib_allocator_dbl(len, &data);
   if (check != LIBBIB_OK)
   {
     free(ret);
@@ -52,7 +75,7 @@ int setvec(clen_t len, double *data, dvector_t *v)
 {
   if (data == NULL)
   {
-    int check = _bib_allocator(len, &data);
+    int check = _bib_allocator_dbl(len, &data);
     if (check != LIBBIB_OK)
       return check;
   }
@@ -60,6 +83,27 @@ int setvec(clen_t len, double *data, dvector_t *v)
   LENGTH(v) = len;
   DATA(v) = data;
   return LIBBIB_OK;
+}
+
+
+
+ivector_t *newivec(clen_t len, int *data)
+{
+  ivector_t *ret = malloc(sizeof(*ret));
+  if (ret == NULL)
+    return NULL;
+  
+  int check = _bib_allocator_int(len, &data);
+  if (check != LIBBIB_OK)
+  {
+    free(ret);
+    return NULL;
+  }
+  
+  LENGTH(ret) = len;
+  DATA(ret) = data;
+  
+  return ret;
 }
 
 
@@ -72,7 +116,7 @@ dmatrix_t *newmat(clen_t nrows, clen_t ncols, double *data)
   
   NROWS(ret) = nrows;
   NCOLS(ret) = ncols;
-  int check = _bib_allocator(nrows*ncols, &data);
+  int check = _bib_allocator_dbl(nrows*ncols, &data);
   if (check != LIBBIB_OK)
   {
     free(ret);
@@ -88,7 +132,7 @@ int setmat(clen_t nrows, clen_t ncols, double *data, dmatrix_t *m)
 {
   if (data == NULL)
   {
-    int check = _bib_allocator(nrows*ncols, &data);
+    int check = _bib_allocator_dbl(nrows*ncols, &data);
     if (check != LIBBIB_OK)
       return check;
   }
