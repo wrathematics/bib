@@ -1,1 +1,1 @@
-PKG_LIBS = ../../../libbib.a
+PKG_LIBS = ../../../build/libbib.a
