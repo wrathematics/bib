@@ -18,13 +18,14 @@ file(GLOB SRC_FUNS "src/funs/*.c")
 file(GLOB SRC_GEN "src/gen/*.c")
 file(GLOB SRC_IO "src/io/*.c")
 file(GLOB SRC_MISC "src/misc/*.c")
-
+set(SOURCES ${SRC_BLAS} ${SRC_LAPACK} ${SRC_FUNS} ${SRC_GEN} ${SRC_IO} ${SRC_MISC})
 set(SRC_HEADERS ${PROJECT_SOURCE_DIR}/src/bib.h)
 
-add_library(libbib STATIC ${SRC_BLAS} ${SRC_LAPACK} ${SRC_FUNS} ${SRC_GEN} ${SRC_IO} ${SRC_MISC})
+add_library(bib_static STATIC ${SOURCES})
+add_library(bib SHARED ${SOURCES})
 
-target_link_libraries (libbib ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_link_libraries(bib ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 
-set_target_properties(libbib PROPERTIES PREFIX "")
-install(TARGETS libbib DESTINATION lib)
+install(TARGETS bib DESTINATION lib)
+install(TARGETS bib_static DESTINATION lib)
 install(FILES ${SRC_HEADERS} DESTINATION include)
