@@ -19,11 +19,24 @@ Additionally, BIB has a few optimized utility functions not included in BLAS/LAP
 
 ## Building and Installation
 
-For the moment, just run
+To build, you will need:
 
-`make`
+* A BLAS library
+* A LAPACK library
+* CMake
 
-in the project root to build the static library.  Eventually this will be a proper build system.
+To build, just run `make`.
+
+If your BLAS and/or LAPACK libraries are in a strange location, you can build the project doing something like:
+
+```bash
+MY_LAPACK_PATH=/path/to/lapack
+
+mkdir -p build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_LIBRARY_PATH=${MY_LAPACK_PATH} ..
+make
+```
 
 
 
