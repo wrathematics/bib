@@ -7,7 +7,6 @@
 
 ![logo](logo/logo.png)
 
-NOTE: this is so new I don't even have a version number yet.  Use at your own peril.
 
 
 BIB is the Basic Interface for the BLAS (and LAPACK), a basic C interface to computational linear algebra.
