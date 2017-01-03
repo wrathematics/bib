@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-std=c99 -O3 -Wall -pedantic -fopenmp
-LDFLAGS=../libbib.a -llapack -lblas -lm
+LDFLAGS=../build/libbib.a -llapack -lblas -lm
 
 
 all: Rpkg
