@@ -11,62 +11,63 @@ int test_mvprod()
   const int m = 5;
   const int n = 3;
   
-  dmatrix_t x;
-  dvector_t v;
-  dvector_t test, truth;
+  dmatrix_t *x;
+  dvector_t *v;
+  dvector_t *test, *truth;
   
   CONTEXT("mvprod");
   
   
   TEST("transpose=false");
   
-  setmat(m, n, NULL, &x);
-  setvec(n, NULL, &v);
-  setvec(m, NULL, &truth);
+  x = newmat(m, n);
+  v = newvec(n);
+  truth = newvec(m);
   
   for (int j=0; j<n; j++)
   {
-    v.data[j] = j+1;
+    v->data[j] = j+1;
     
     for (int i=0; i<m; i++)
-      x.data[i + m*j] = (i+m*j) + 1;
+      x->data[i + m*j] = (i+m*j) + 1;
   }
   
-  truth.data[0] = 46;
-  truth.data[1] = 52;
-  truth.data[2] = 58;
-  truth.data[3] = 64;
-  truth.data[4] = 70;
+  truth->data[0] = 46;
+  truth->data[1] = 52;
+  truth->data[2] = 58;
+  truth->data[3] = 64;
+  truth->data[4] = 70;
   
-  mvprod_a(false, 1.0, &x, &v, &test);
-  ret = all_equal(true, 1, m, test.data, truth.data);
+  bib_mvprod_a(false, 1.0, x, v, &test);
+  ret = all_equal(true, 1, m, test->data, truth->data);
+  
+  freevec(v);
+  freevec(truth);
+  freevec(test);
   
   
   
   TEST("transpose=true");
   
-  freevec(&v);
-  freevec(&truth);
-  freevec(&test);
-  
-  setvec(m, NULL, &v);
-  setvec(n, NULL, &truth);
+  v = newvec(m);
+  truth = newvec(n);
+  truth = newvec(n);
   
   for (int i=0; i<m; i++)
-    v.data[i] = i+1;
+    v->data[i] = i+1;
   
-  truth.data[0] = 55;
-  truth.data[1] = 130;
-  truth.data[2] = 205;
+  truth->data[0] = 55;
+  truth->data[1] = 130;
+  truth->data[2] = 205;
   
-  mvprod_a(true, 1.0, &x, &v, &test);
-  ret = all_equal(true, 1, n, test.data, truth.data);
+  bib_mvprod_a(true, 1.0, x, v, &test);
+  ret = all_equal(true, 1, n, test->data, truth->data);
   
   
-  freevec(&v);
-  freevec(&truth);
-  freevec(&test);
-  freemat(&x);
+  freevec(v);
+  freevec(truth);
+  freevec(test);
+  freemat(x);
   return ret;
 }
 
