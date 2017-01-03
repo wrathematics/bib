@@ -1,6 +1,10 @@
 #ifndef LIBBIB_H_
 #define LIBBIB_H_
 
+#define LIBBIB_VERSION_MAJOR 0
+#define LIBBIB_VERSION_MINOR 1
+#define LIBBIB_VERSION_PATCH 0
+
 
 #include <stdlib.h>
 #include "types.h"

@@ -1,5 +1,10 @@
 # libbib
 
+* **Version:** 0.1-0
+* **Status:** [![Build Status](https://travis-ci.org/wrathematics/bib.png)](https://travis-ci.org/wrathematics/bib)
+* **License:** ![License](http://img.shields.io/badge/license-BSD%201--Clause-orange.svg?style=flat)
+* **Author:** Drew Schmidt
+
 ![logo](logo/logo.png)
 
 NOTE: this is so new I don't even have a version number yet.  Use at your own peril.
